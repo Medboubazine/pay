@@ -1,0 +1,40 @@
+{
+    "name": "medboubazine/pay",
+    "type": "library",
+    "description": "All In One . PHP Library for Payment Gateways",
+    "keywords": [
+        "php",
+        "payment-gateway",
+        "paypal-checkout",
+        "paysera-checkout",
+        "chargily-pay",
+        "binance-pay"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Medboubazine",
+            "email": "mohamedtorino161@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "paypal/rest-api-sdk-php": "^1.14",
+        "illuminate/support": "^10.3",
+        "rakit/validation": "^1.4",
+        "webtopay/libwebtopay": "^1.8",
+        "medboubazine/chargily-checkout": "^1.1",
+        "medboubazine/binance-pay": "^1.0",
+        "nesbot/carbon": "^2.66"
+    },
+    "autoload": {
+        "psr-4": {
+            "Medboubazine\\Pay\\": "src/"
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.2",
+        "symfony/error-handler": "^6.2"
+    }
+}

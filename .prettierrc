@@ -1,0 +1,11 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 4,
+  "semi": false,
+  "singleQuote": false,
+  "endOfLine": "auto",
+  "bracketSameLine": true,
+  "html.format.wrapAttributes": "auto",
+  "html.format.wrapLineLength": 0,
+  "printWidth": 1000
+}
