@@ -15,8 +15,11 @@ class PaymentStatus
         $status = strval($status);
 
         switch ($status) {
-            case 'approved':
+            case 'COMPLETED':
                 return "paid";
+                break;
+            case 'VOIDED':
+                return "failed";
                 break;
             default:
                 return $status;

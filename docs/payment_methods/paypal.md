@@ -6,26 +6,27 @@
 
 $credentials = new Credentials();
 
-$credentials->setEnv("sandbox"); //sandbox OR live
+$credentials = new Credentials();
+
+$credentials->setEnv(""); //sandbox OR live
 $credentials->setApiKey(""); //Your paypal Api Key
 $credentials->setSecretKey(""); //Your paypal Api Key
-$credentials->setLogEnabled(false);
-//if logEnabled set is true uncoment next line
-//$credentials->setLogPath(__DIR__ . "/log/paypal_log.log");
 
 $attributes = new Attributes();
 
+$attributes->setInvoiceId();
 $attributes->setAmount("10");
 $attributes->setCurrency("USD");
 $attributes->setDescription("Order Amount");
 $attributes->setProcessUrl("/dist/process.php"); // Payment process page
-$attributes->setBackUrl("/back.php");
+$attributes->setCancelUrl("/cancel.php");
 
 $payment = Pay::createPayment(Pay::PM_PAYPAL, $credentials, $attributes);
 
+
 if ($payment) {
     $payment_id = $payment->getId();
-    $url = $payment->getId();
+    $url = $payment->getUrl();
     //redirect to url
 } else {
     // "Payment creation failed
@@ -40,14 +41,13 @@ $pay = new Pay();
 
 $credentials = new Credentials();
 
-$credentials->setEnv("");
-$credentials->setApiKey("");
-$credentials->setSecretKey("");
-$credentials->setLogEnabled(false);
-$credentials->setLogPath(__DIR__ . "/log/paypal_log.log");
+$credentials = new Credentials();
+
+$credentials->setEnv(""); //sandbox OR live
+$credentials->setApiKey(""); //Your paypal Api Key
+$credentials->setSecretKey(""); //Your paypal Api Key
 
 $attributes = new Attributes();
-$attributes->setAcceptOnlyVerifiedAccounts(false);
 
 $payment = Pay::processPayment(Pay::PM_PAYPAL, $credentials, $attributes);
 

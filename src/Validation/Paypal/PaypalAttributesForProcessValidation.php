@@ -15,7 +15,7 @@ class PaypalAttributesForProcessValidation extends Validation implements Validat
     public function rules(): array
     {
         return [
-            "accept_only_verified_accounts" => "required|boolean",
+            "accept_only_verified_accounts" => "nullable|boolean",
         ];
     }
 }

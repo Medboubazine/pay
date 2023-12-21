@@ -18,8 +18,6 @@ class PaypalCredentialsForCreateValidation extends Validation implements Validat
             "api_key" => "required|min:32",
             "secret_key" => "required|min:32",
             "env" => "required|in:sandbox,live",
-            "log_enabled" => "required|boolean",
-            "log_path" => "required_if:log_enabled,true",
         ];
     }
 }

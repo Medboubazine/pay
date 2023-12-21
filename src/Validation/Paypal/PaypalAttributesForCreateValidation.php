@@ -15,6 +15,7 @@ class PaypalAttributesForCreateValidation extends Validation implements Validati
     public function rules(): array
     {
         return [
+            "invoice_id" => "required|min:1|max:100",
             "amount" => "required|numeric|min:0.01",
             "currency" => "required|min:3|in:AUD,BRL,CAD,CNY,CZK,DKK,EUR,HKD,HUF,JPY,MYR,MXN,TWD,NZD,NOK,PHP,PLN,RUB,SEK,GBP,THB,SGD,USD,CHF",
             "description" => "required|min:2|max:512",
