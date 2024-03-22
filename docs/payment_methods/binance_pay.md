@@ -27,7 +27,7 @@ $payment = Pay::createPayment(Pay::PM_BINANCE_PAY, $credentials, $attributes);
 
 if ($payment) {
     $payment_id = $payment->getId();
-    $url = $payment->getId();
+    $url = $payment->getUrl();
     //redirect to url
 } else {
     // "Payment creation failed
