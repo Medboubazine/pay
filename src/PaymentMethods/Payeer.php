@@ -8,6 +8,8 @@ use Medboubazine\Pay\Core\Elements\Credentials;
 use Medboubazine\Pay\Core\Elements\Payment;
 use Medboubazine\Pay\Core\Helpers\PaymentStatus;
 use Medboubazine\Pay\Core\Interfaces\PaymentMethodInterface;
+use Medboubazine\Pay\ThirdParty\Payeer\Payeer as ThirdPartyPayeer;
+use Medboubazine\Pay\ThirdParty\Payeer\PayeerMethod;
 use Medboubazine\Pay\Validation\Payeer\PayeerAttributesForProcessValidation;
 use Medboubazine\Pay\Validation\Payeer\PayeerCredentialsForProcessValidation;
 use Medboubazine\Pay\Validation\Payeer\PayeerAttributesForCreateValidation;
@@ -27,7 +29,24 @@ class Payeer extends PaymentMethod implements PaymentMethodInterface
         parent::createPayment($credentials, $attributes);
         //
 
-        //
+        $third_party = new ThirdPartyPayeer($credentials->getMerchantId(), $credentials->getSecretKey(), $credentials->getEncryptionKey());
+
+        $url = $third_party->getCheckoutUrl(
+            $attributes->getOrderId(),
+            $attributes->getAmount(),
+            $attributes->getCurrency(),
+            $attributes->getDescription(),
+            $attributes->getBackUrl(),
+            $attributes->getProcessUrl(),
+            PayeerMethod::PAYEER
+        );
+
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            return (new Payment)
+                ->setId($attributes->getOrderId())
+                ->setUrl($url);
+        }
+
         return null;
     }
     /**
@@ -39,24 +58,28 @@ class Payeer extends PaymentMethod implements PaymentMethodInterface
     {
         parent::processPayment($credentials, $attributes);
 
-        $f_name = $response['client'] ?? null;
-        $l_name = null;
-        $full_name = "{$f_name} {$l_name}";
-        $status = PaymentStatus::payeer();
+        $third_party = new ThirdPartyPayeer($credentials->getMerchantId(), $credentials->getSecretKey(), $credentials->getEncryptionKey());
 
-        return (new Payment())
-            //REQUIRED
-            ->setId()
-            ->setOrderId()
-            ->setStatus($status)
-            ->setPayerFirstName($f_name)
-            ->setPayerLastName($l_name)
-            ->setPayerFullName($full_name)
-            ->setAmount()
-            ->setFee()
-            ->setTotal()
-            ->setCurrency();
+        $webhook_data = $third_party->parseWebhook();
 
+        if (is_array($webhook_data)) {
+
+            $status = PaymentStatus::payeer($webhook_data['status']);
+
+            return (new Payment())
+                //REQUIRED
+                ->setId($webhook_data['id'])
+                ->setOrderId($webhook_data['order'])
+                ->setStatus($status)
+                ->setPayerFirstName(null)
+                ->setPayerLastName(null)
+                ->setPayerFullName(null)
+                ->setPayerEmail($webhook_data['client_email'])
+                ->setAmount($webhook_data['amount'])
+                ->setFee(0)
+                ->setTotal($webhook_data['amount'])
+                ->setCurrency($webhook_data['currency']);
+        }
         return null;
     }
     /**

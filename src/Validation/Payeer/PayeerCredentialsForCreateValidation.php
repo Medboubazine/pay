@@ -14,6 +14,11 @@ class PayeerCredentialsForCreateValidation extends Validation implements Validat
      */
     public function rules(): array
     {
-        return [];
+        return [
+            "env" => "required|in:sandbox,live",
+            "merchant_id" => "required|min:1",
+            "secret_key" => "required|min:1",
+            "encryption_key" => "required|min:1",
+        ];
     }
 }

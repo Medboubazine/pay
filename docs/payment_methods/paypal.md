@@ -6,8 +6,6 @@
 
 $credentials = new Credentials();
 
-$credentials = new Credentials();
-
 $credentials->setEnv(""); //sandbox OR live
 $credentials->setApiKey(""); //Your paypal Api Key
 $credentials->setSecretKey(""); //Your paypal Api Key
@@ -38,8 +36,6 @@ if ($payment) {
 
 ```php
 $pay = new Pay();
-
-$credentials = new Credentials();
 
 $credentials = new Credentials();
 

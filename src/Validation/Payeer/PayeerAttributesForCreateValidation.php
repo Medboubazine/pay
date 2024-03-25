@@ -14,6 +14,13 @@ class PayeerAttributesForCreateValidation extends Validation implements Validati
      */
     public function rules(): array
     {
-        return [];
+        return [
+            "order_id" => "required|min:1",
+            "amount" => "required|numeric",
+            "currency" => "required|min:3|max:3",
+            "description" => "required|min:1",
+            "back_url" => "required|url",
+            "process_url" => "required|url",
+        ];
     }
 }

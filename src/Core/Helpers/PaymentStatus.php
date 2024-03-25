@@ -138,4 +138,15 @@ class PaymentStatus
                 break;
         }
     }
+    public static function payeer($status): string
+    {
+        switch ($status) {
+            case 'success':
+                return "paid";
+                break;
+            default:
+                return "failed";
+                break;
+        }
+    }
 }
