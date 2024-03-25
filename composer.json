@@ -20,13 +20,14 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/support": "^10.3",
+        "illuminate/support": "^10",
         "rakit/validation": "^1.4",
         "webtopay/libwebtopay": "^1.8",
-        "medboubazine/chargily-checkout": "^1.1",
         "medboubazine/binance-pay": "^1.0",
         "nesbot/carbon": "^2.66",
-        "guzzlehttp/guzzle": "^7.8"
+        "guzzlehttp/guzzle": "^7.8",
+        "chargily/chargily-pay": "^2.0",
+        "medboubazine/chargily-checkout": "^1.1"
     },
     "autoload": {
         "psr-4": {

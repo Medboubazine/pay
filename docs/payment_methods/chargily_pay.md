@@ -28,7 +28,7 @@ $payment = Pay::createPayment(Pay::PM_CHARGILY_PAY, $credentials, $attributes);
 
 if ($payment) {
     $payment_id = $payment->getId();
-    $url = $payment->getId();
+    $url = $payment->getUrl();
     //redirect to url
 } else {
     // "Payment creation failed
@@ -52,7 +52,7 @@ $attributes = new Attributes();
 $payment = Pay::processPayment(Pay::PM_CHARGILY_PAY, $credentials, $attributes);
 
 if($payment){
-    if($payment->getStatus() === "approved"){
+    if($payment->getStatus() === "paid"){
     //payment is confirmed
     }elseif($payment->getStatus() === "canceled"){
         //payment is canceled

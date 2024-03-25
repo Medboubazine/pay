@@ -9,6 +9,7 @@ use Medboubazine\Pay\Core\Exceptions\InvalidMethodException;
 use Medboubazine\Pay\Core\Helpers\Str;
 use Medboubazine\Pay\PaymentMethods\BinancePay;
 use Medboubazine\Pay\PaymentMethods\ChargilyPay;
+use Medboubazine\Pay\PaymentMethods\ChargilyPayV2;
 use Medboubazine\Pay\PaymentMethods\Payeer;
 use Medboubazine\Pay\PaymentMethods\Paypal;
 use Medboubazine\Pay\PaymentMethods\Paysera;
@@ -21,6 +22,7 @@ class Pay
      */
     public const PM_BINANCE_PAY = "binance_pay";
     public const PM_CHARGILY_PAY = "chargily_pay";
+    public const PM_CHARGILY_PAY_V2 = "chargily_pay_v2";
     public const PM_PAYEER = "payeer";
     public const PM_PAYPAL = "paypal";
     public const PM_PAYSERA = "paysera";
@@ -86,6 +88,7 @@ class Pay
         return [
             "binance_pay" => BinancePay::class,
             "chargily_pay" => ChargilyPay::class,
+            "chargily_pay_v2" => ChargilyPayV2::class,
             "payeer" => Payeer::class,
             "paypal" => Paypal::class,
             "paysera" => Paysera::class,

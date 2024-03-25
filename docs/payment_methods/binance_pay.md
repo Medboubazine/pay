@@ -52,7 +52,7 @@ $attributes = new Attributes();
 $payment = Pay::processPayment(Pay::PM_BINANCE_PAY, $credentials, $attributes);
 
 if($payment){
-    if($payment->getStatus() === "approved"){
+    if($payment->getStatus() === "paid"){
     //payment is confirmed
     }elseif($payment->getStatus() === "canceled"){
         //payment is canceled

@@ -28,7 +28,6 @@ class ChargilyPay extends PaymentMethod implements PaymentMethodInterface
     {
         parent::createPayment($credentials, $attributes);
         //
-        //
         $configurations = [
             'api_key' => $credentials->getApiKey(),
             'api_secret' => $credentials->getSecretKey(),

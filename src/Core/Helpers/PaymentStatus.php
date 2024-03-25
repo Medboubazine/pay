@@ -113,4 +113,29 @@ class PaymentStatus
                 break;
         }
     }
+    /**
+     * ChargilyPayV2
+     *
+     * @param string $status
+     * @return string
+     */
+    public static function chargilyPayV2($status): string
+    {
+        $status = strval($status);
+
+        switch ($status) {
+            case 'paid':
+                return "paid";
+                break;
+            case 'canceled':
+                return "canceled";
+                break;
+            case 'failed':
+                return "failed";
+                break;
+            default:
+                return $status;
+                break;
+        }
+    }
 }

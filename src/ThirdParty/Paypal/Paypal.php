@@ -108,9 +108,8 @@ final class Paypal
      * @param string $reference
      * @return PaypalOrderElement|null
      */
-    public function createOrder(string $amount, string $currency, PaypalPaymentDetailsElement $payment,  PaypalUrlsElement $urls): ?PaypalOrderElement
+    public function createPaypalOrder(string $amount, string $currency, PaypalPaymentDetailsElement $payment,  PaypalUrlsElement $urls): ?PaypalOrderElement
     {
-        //
         $options = [];
         //headers
         $options["headers"] = [
@@ -168,10 +167,17 @@ final class Paypal
 
         if ($response->getStatusCode() === 201 or $response->getStatusCode() === 200) {
             if (isset($content["id"])) {
+
+                $payer_action = array_filter($content['links'], function ($value) {
+                    return $value['rel']  === "payer-action";
+                });
+                $payer_action = current($payer_action) ?? [];
+                $payer_action_uri =  $payer_action['href'] ?? null;
+
                 return (new PaypalOrderElement())
                     ->setId($content["id"])
                     ->setStatus($content["status"])
-                    ->setCheckoutUrl($this->getOrderCheckoutUrl($content["id"]));
+                    ->setCheckoutUrl($payer_action_uri);
             }
         } elseif ($response->getStatusCode() === 400 or $response->getStatusCode() === 422) {
             PaypalException::createOrderError($content);
@@ -179,19 +185,6 @@ final class Paypal
         PaypalException::error("Something happend when trying to create order");
 
         return null;
-    }
-    /**
-     * Get Checkout url
-     *
-     * @param string $order_id
-     * @return string
-     */
-    public function getOrderCheckoutUrl(string $order_id): string
-    {
-        if ($this->live_environment) {
-            return "https://www.paypal.com/checkoutnow?token={$order_id}";
-        }
-        return "https://www.sandbox.paypal.com/checkoutnow?token={$order_id}";
     }
     /**
      * get Order Details
@@ -309,6 +302,7 @@ final class Paypal
 
         $content = $response->getBody()->getContents();
         $content = json_decode($content, true);
+
         if ($response->getStatusCode() === 201) {
             if (isset($content["id"])) {
                 return (new PaypalOrderElement())

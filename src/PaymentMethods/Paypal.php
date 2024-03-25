@@ -8,8 +8,8 @@ use Medboubazine\Pay\Core\Elements\Credentials;
 use Medboubazine\Pay\Core\Elements\Payment;
 use Medboubazine\Pay\Core\Helpers\PaymentStatus;
 use Medboubazine\Pay\Core\Interfaces\PaymentMethodInterface;
-use Medboubazine\Pay\ThirdParty\Paypal\Elements\PaypalPaymentDetailsElement;
-use Medboubazine\Pay\ThirdParty\Paypal\Elements\PaypalUrlsElement;
+use Medboubazine\Pay\ThirdParty\Paypal\Elements\PaypalPaymentDetailsElement as ThirdPartyPaypalPaymentDetails;
+use Medboubazine\Pay\ThirdParty\Paypal\Elements\PaypalUrlsElement as ThirdPartyPaypalUrls;
 use Medboubazine\Pay\ThirdParty\Paypal\Paypal as ThirdPartyPaypal;
 use Medboubazine\Pay\Validation\Paypal\PaypalAttributesForCreateValidation;
 use Medboubazine\Pay\Validation\Paypal\PaypalAttributesForProcessValidation;
@@ -32,11 +32,11 @@ class Paypal extends PaymentMethod implements PaymentMethodInterface
         //
         $paypal = new ThirdPartyPaypal($credentials->getEnv() === "live", $credentials->getApiKey(), $credentials->getSecretKey());
 
-        $paypal_payment = PaypalPaymentDetailsElement::create($attributes->getInvoiceId(), $attributes->getDescription(), $attributes->getDescription());
+        $paypal_payment = ThirdPartyPaypalPaymentDetails::create($attributes->getInvoiceId(), $attributes->getDescription(), $attributes->getDescription());
 
-        $paypal_urls = PaypalUrlsElement::create($attributes->getProcessUrl(), $attributes->getCancelUrl());
+        $paypal_urls = ThirdPartyPaypalUrls::create($attributes->getProcessUrl(), $attributes->getCancelUrl());
 
-        $paypal_order = $paypal->createOrder($attributes->getAmount(), $attributes->getCurrency(), $paypal_payment, $paypal_urls);
+        $paypal_order = $paypal->createPaypalOrder($attributes->getAmount(), $attributes->getCurrency(), $paypal_payment, $paypal_urls);
 
         $url = $paypal_order->getCheckoutUrl();
         if (filter_var($url, FILTER_VALIDATE_URL)) {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Medboubazine\Pay\Validation\Payeer;
+namespace Medboubazine\Pay\Validation\ChargilyPayV2;
 
 use Medboubazine\Pay\Core\Abstracts\Validation;
 use Medboubazine\Pay\Core\Interfaces\ValidationInterface;
 
-class PayeerCredentialsForProcessValidation extends Validation implements ValidationInterface
+class ChargilyPayV2AttributesForProcessValidation extends Validation implements ValidationInterface
 {
     /**
      * Rules

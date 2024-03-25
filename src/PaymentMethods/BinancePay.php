@@ -4,10 +4,10 @@ namespace Medboubazine\Pay\PaymentMethods;
 
 use Carbon\Carbon;
 use Medboubazine\BinancePay\Binance;
-use Medboubazine\BinancePay\Core\Resources\Credentials as ResourcesCredentials;
-use Medboubazine\BinancePay\Core\Resources\Order;
-use Medboubazine\BinancePay\Core\Resources\Product;
-use Medboubazine\BinancePay\Core\Resources\Urls;
+use Medboubazine\BinancePay\Core\Resources\Credentials as MedboubazineBinancePayCredentials;
+use Medboubazine\BinancePay\Core\Resources\Order   as MedboubazineBinancePayOrder;
+use Medboubazine\BinancePay\Core\Resources\Product  as MedboubazineBinancePayProduct;
+use Medboubazine\BinancePay\Core\Resources\Urls  as MedboubazineBinancePayUrls;
 use Medboubazine\Pay\Core\Abstracts\PaymentMethod;
 use Medboubazine\Pay\Core\Elements\Attributes;
 use Medboubazine\Pay\Core\Elements\Credentials;
@@ -37,27 +37,27 @@ class BinancePay extends PaymentMethod implements PaymentMethodInterface
             ->addSeconds($credentials->getPaymentExpirationTime())
             ->valueOf());
         //
-        $binance_credentials = new ResourcesCredentials();
+        $binance_credentials = new MedboubazineBinancePayCredentials();
         $binance_credentials->setApiKey($credentials->getApiKey())
             ->setApiSecret($credentials->getSecretKey())
             ->setEnvTerminalType("WEB");
         //
         $order_id = ($credentials->getEnv() === "sandbox") ? "test{$attributes->getOrderId()}" : $attributes->getOrderId();
 
-        $order = new Order();
+        $order = new MedboubazineBinancePayOrder();
         $order->setId($order_id)
             ->setAmount($attributes->getAmount())
             ->setCurrency($attributes->getCurrency())
             ->setAllowedCurrencies(["BUSD", "USDT", "BNB"])
             ->setExpireTime($timestamp);
         //
-        $product = new Product;
+        $product = new MedboubazineBinancePayProduct;
         $product->setId(Str::slug($attributes->getDescription()))
             ->setType("02")
             ->setCategory("6000")
             ->setName($attributes->getDescription());
         //
-        $urls = new Urls();
+        $urls = new MedboubazineBinancePayUrls();
         $urls->setReturnUrl($attributes->getBackUrl())
             ->setCancelUrl($attributes->getBackUrl())
             ->setWebhookUrl($attributes->getProcessUrl());
@@ -84,7 +84,7 @@ class BinancePay extends PaymentMethod implements PaymentMethodInterface
     {
         parent::processPayment($credentials, $attributes);
 
-        $binance_credentials = new \Medboubazine\BinancePay\Core\Resources\Credentials();
+        $binance_credentials = new MedboubazineBinancePayCredentials();
         $binance_credentials->setApiKey($credentials->getApiKey())
             ->setApiSecret($credentials->getSecretKey())
             ->setEnvTerminalType("WEB");
