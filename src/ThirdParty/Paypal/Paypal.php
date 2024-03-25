@@ -214,10 +214,10 @@ final class Paypal
                     ->setStatus($content["status"])
                     ->setCreatedAt($create_time ? Carbon::parse($create_time) : null);
                 if (isset($content["payer"])) {
-                    $payer = $content["payer"];
-                    $return->setPayerId($payer["payer_id"]);
-                    $return->setPayerFullname(implode(" ", array_values($payer["name"])));
-                    $return->setPayerEmail($payer["email_address"]);
+                    $payer = $content["payer"] ?? [];
+                    $return->setPayerId($payer["payer_id"]  ?? null);
+                    $return->setPayerFullname(implode(" ", array_values($payer["name"] ?? [])));
+                    $return->setPayerEmail($payer["email_address"]  ?? null);
                 }
                 if (isset($content["purchase_units"]) and $content["status"] === "COMPLETED") {
                     $collect = collect();
