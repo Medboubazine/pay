@@ -14,3 +14,4 @@ The package supports the following gateways
 -   [Chargily Pay V1](./payment_methods/chargily_pay.md)
 -   [Chargily Pay V2](./payment_methods/chargily_pay_v2.md)
 -   [Binance Pay](./payment_methods/binance_pay.md)
+-   [Payeer](./payment_methods/payeer.md)
