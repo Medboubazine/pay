@@ -22,7 +22,7 @@ class PayseraAttributesForCreateValidation extends Validation implements Validat
             "country" => "required|in:" . implode(",", Countries::getCodes()),
             "order_id" => "required|numeric|min:1",
             "currency" => "required|in:" . implode(",", Currencies::getCodes()),
-            "amount" => "required|numeric|min:1",
+            "amount" => "required|numeric|min:0.01",
         ];
     }
 }
