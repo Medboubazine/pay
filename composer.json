@@ -26,7 +26,7 @@
         "medboubazine/binance-pay": "^1.0",
         "nesbot/carbon": "^2.66",
         "guzzlehttp/guzzle": "^7.8",
-        "chargily/chargily-pay": "^2.0",
+        "chargily/chargily-pay": "^2.0"
     },
     "autoload": {
         "psr-4": {
