@@ -27,7 +27,6 @@
         "nesbot/carbon": "^2.66",
         "guzzlehttp/guzzle": "^7.8",
         "chargily/chargily-pay": "^2.0",
-        "medboubazine/chargily-checkout": "^1.1"
     },
     "autoload": {
         "psr-4": {
